@@ -1,21 +1,5 @@
 // ask.js
 import dotenv from "dotenv";
-import fs from "fs";
-import { GoogleGenerativeAI } from "@google/generative-ai";
-import { GoogleAIFileManager } from "@google/generative-ai/server";
-import { systemInstructions } from "./prompts.js"; // Import systemInstructions
-
-dotenv.config();
-  while (getFile.state === "PROCESSING") {
-    console.log(`File processing status: ${getFile.state}, retrying in 5s...`);
-    await new Promise((resolve) => setTimeout(resolve, 5000));
-    getFile = await fileManager.getFile(fileId);
-  }
-
-  if (getFile.state === "FAILED") {
-    throw new Error("File processing failed.");
-  }
-  
   return {
     fileData: {
       mimeType: getFile.mimeType,
