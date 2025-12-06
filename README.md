@@ -1,4 +1,5 @@
 # LegalEase 🚀
+Live Link : https://legal-ease-jss.vercel.app/
 
 Your AI-powered legal assistant for simplifying legal jargon and understanding your rights.
 
