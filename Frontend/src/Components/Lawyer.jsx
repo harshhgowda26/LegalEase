@@ -41,7 +41,7 @@ if (cityState && cityState !== "e.g., New York, NY")
 if (language && language !== "Any Language")
   params.append("language", language);
 
-fetch(`http://localhost:3000/api/lawyer/lawyers?${params.toString()}`)
+fetch(`${(import.meta.env.VITE_NODE_API_URL || "http://localhost:3000")}/api/lawyer/lawyers?${params.toString()}`)
 
   .then((res) => res.json())
   .then((data) => {
