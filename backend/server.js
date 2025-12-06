@@ -18,6 +18,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.send("LegalEase Node Backend is running!");
+});
+
 const PROMPTS_FILE = path.resolve("prompts.json");
 const FILEID_FILE = path.resolve("fileId.json");
 

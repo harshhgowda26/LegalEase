@@ -110,6 +110,10 @@ class ChatRequest(BaseModel):
 async def health():
     return {"status": "ok", "index_size": int(index.ntotal), "chunks_stored": len(CHUNKS)}
 
+@app.get("/")
+async def root():
+    return {"message": "LegalEase Python Backend is running!"}
+
 @app.post("/upload")
 async def upload_file(file: UploadFile = File(...)):
     """
