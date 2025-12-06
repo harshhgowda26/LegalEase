@@ -6,20 +6,6 @@ import { GoogleAIFileManager } from "@google/generative-ai/server";
 import { systemInstructions } from "./prompts.js"; // Import systemInstructions
 
 dotenv.config();
-
-const API_KEY = process.env.GEMINI_API_KEY;
-const genAI = new GoogleGenerativeAI(API_KEY);
-const fileManager = new GoogleAIFileManager(API_KEY);
-
-// Load saved file ID
-const fileData = JSON.parse(fs.readFileSync("fileId.json"));
-const fileId = fileData.fileId;
-
-const chatSessions = {};
-let cachedFilePart = null;
-
-async function getFilePart() {
-  let getFile = await fileManager.getFile(fileId);
   while (getFile.state === "PROCESSING") {
     console.log(`File processing status: ${getFile.state}, retrying in 5s...`);
     await new Promise((resolve) => setTimeout(resolve, 5000));
