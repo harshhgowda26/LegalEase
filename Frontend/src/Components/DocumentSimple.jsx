@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 // Base API URL (use Vite env if present, otherwise fallback)
-const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/api";
+const API_BASE = (import.meta.env.VITE_NODE_API_URL || "http://localhost:3000") + "/api";
  
 
 const DocumentSimple = () => {
@@ -218,7 +218,7 @@ const sendToBackend3 = async (query) => {
   setResults1(null);
 
   try {
-    const response = await fetch("http://127.0.0.1:8000/query", {
+    const response = await fetch((import.meta.env.VITE_PYTHON_API_URL || "http://127.0.0.1:8000") + "/query", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

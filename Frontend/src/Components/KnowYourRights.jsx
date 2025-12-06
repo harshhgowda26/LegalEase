@@ -80,7 +80,7 @@ const KnowYourRights = () => {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const chatEndRef = useRef(null);
-  const API_URL = "http://localhost:3000/api/ask-gemini"; 
+   const API_URL = (import.meta.env.VITE_NODE_API_URL || "http://localhost:3000") + "/api/ask-gemini"; 
 
   // Language Selector Options
   const languageOptions = [
