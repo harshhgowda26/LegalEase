@@ -15,7 +15,6 @@ import * as pdfjsLib from "pdfjs-dist";
 import pdfjsWorker from "pdfjs-dist/build/pdf.worker.min.mjs?url";
 import Tesseract from "tesseract.js";
 import ReactMarkdown from "react-markdown";
-import { useNavigate } from "react-router-dom";
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 // Base API URL (use Vite env if present, otherwise fallback)
@@ -39,8 +38,6 @@ const DocumentSimple = () => {
   const [interimText, setInterimText] = useState("");
   const [finalText, setFinalText] = useState("");
   const [isRecognitionSupported, setIsRecognitionSupported] = useState(true);
-
-  const navigate = useNavigate();
 
   // ✅ Load saved results when the component mounts
   // useEffect(() => {
@@ -153,8 +150,10 @@ const DocumentSimple = () => {
           recognitionRef.current.onend = null;
           recognitionRef.current.onerror = null;
           try {
-            recognitionRef.current.abort();
-          } catch (e) {}
+  recognitionRef.current.abort();
+} catch (e) {
+  console.error("Recognition abort failed:", e);
+}
         }
       } catch (err) {
         console.error("Error cleaning up recognition:", err);
