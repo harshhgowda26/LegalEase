@@ -43,32 +43,32 @@ const DocumentSimple = () => {
   const navigate = useNavigate();
 
   // ✅ Load saved results when the component mounts
-  useEffect(() => {
-    const saved = localStorage.getItem("results");
-    if (saved) {
-      setResults(JSON.parse(saved));
-      console.log("✅ Loaded saved results from localStorage");
-    }
-  }, []);
+  // useEffect(() => {
+  //   const saved = localStorage.getItem("results");
+  //   if (saved) {
+  //     setResults(JSON.parse(saved));
+  //     console.log("✅ Loaded saved results from localStorage");
+  //   }
+  // }, []);
 
   // ✅ Save to localStorage every time results change
-  useEffect(() => {
-    if (results) {
-      localStorage.setItem("results", JSON.stringify(results));
-      console.log("💾 Results saved to localStorage");
-    }
-  }, [results]);
+  // useEffect(() => {
+  //   if (results) {
+  //     localStorage.setItem("results", JSON.stringify(results));
+  //     console.log("💾 Results saved to localStorage");
+  //   }
+  // }, [results]);
 
-  useEffect(() => {
-    const savedText = localStorage.getItem("extractedText");
-    if (savedText) setExtractedText(JSON.parse(savedText));
-  }, []);
+  // useEffect(() => {
+  //   const savedText = localStorage.getItem("extractedText");
+  //   if (savedText) setExtractedText(JSON.parse(savedText));
+  // }, []);
 
-  useEffect(() => {
-    if (extractedText && Object.keys(extractedText).length > 0) {
-      localStorage.setItem("extractedText", JSON.stringify(extractedText));
-    }
-  }, [extractedText]);
+  // useEffect(() => {
+  //   if (extractedText && Object.keys(extractedText).length > 0) {
+  //     localStorage.setItem("extractedText", JSON.stringify(extractedText));
+  //   }
+  // }, [extractedText]);
 
   // Initialize Web Speech API (SpeechRecognition)
   useEffect(() => {

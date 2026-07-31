@@ -1,36 +1,51 @@
 import dotenv from "dotenv";
 import fs from "fs";
-import { GoogleAIFileManager } from "@google/generative-ai/server";
+import { GoogleGenAI } from "@google/genai";
 
 dotenv.config();
 
-const fileManager = new GoogleAIFileManager(process.env.GEMINI_API_KEY);
+const ai = new GoogleGenAI({
+  apiKey: process.env.GEMINI_API_KEY,
+});
 
 async function uploadFile(filePath, displayName) {
   try {
-    const upload = await fileManager.uploadFile(filePath, {
-      mimeType: "application/pdf",
-      displayName,
+    const file = await ai.files.upload({
+      file: filePath,
+      config: {
+        mimeType: "application/pdf",
+        displayName,
+      },
     });
 
-    console.log("Uploaded:", upload.file.name);
+    console.log("Uploaded:", file.name);
 
-    // Save file ID to local JSON
-    const fileData = { fileId: upload.file.name };
-    fs.writeFileSync("fileId.json", JSON.stringify(fileData, null, 2));
-    console.log("File ID saved to fileId.json");
+    fs.writeFileSync(
+      "fileId.json",
+      JSON.stringify(
+        {
+          fileId: file.name,
+          fileUri: file.uri,
+          mimeType: file.mimeType,
+        },
+        null,
+        2
+      )
+    );
 
-    return upload.file.name;
+    console.log("File information saved.");
+
+    return file;
   } catch (err) {
-    console.error("Upload failed:", err);
+    console.error(err);
   }
 }
 
-// Run directly if executed
 if (process.argv[2]) {
-  const filePath = process.argv[2]; // e.g., "constitution.pdf"
-  const displayName = process.argv[3] || "Uploaded PDF";
-  uploadFile(filePath, displayName);
+  uploadFile(
+    process.argv[2],
+    process.argv[3] || "Constitution PDF"
+  );
 }
 
 export default uploadFile;

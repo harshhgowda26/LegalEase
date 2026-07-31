@@ -2,12 +2,10 @@ import express from "express";
 import fs from "fs";
 import path from "path";
 import cors from "cors";
-import fetch from "node-fetch"; // ✅ for calling external APIs
 import dotenv from "dotenv";
 import { askGemini } from "./ask.js";
 
 // Import route files
-import chatRoutes from "./routes/chat.js";
 import simplifierRoutes from "./routes/simplifier.js";
 import translatorRoutes from "./routes/translator.js";
 import lawyerRoutes from "./routes/lawyer.js";
@@ -68,52 +66,7 @@ app.post("/api/ask-gemini", async (req, res) => {
   }
 });
 
-// ======================= PERPLEXITY DOCUMENT SIMPLIFIER =======================
-app.post("/api/process-text", async (req, res) => {
-  try {
-    const { text, prompt } = req.body;
-    if (!text) {
-      return res.status(400).json({ error: "Text is required" });
-    }
-
-    const apiResponse = await fetch("https://api.perplexity.ai/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${process.env.PERPLEXITY_API_KEY}`,
-      },
-      body: JSON.stringify({
-        model: "sonar-pro",
-        messages: [
-          { role: "system", content: "You are a helpful legal assistant." },
-          {
-            role: "user",
-            content: `
-${prompt || "Simplify and summarize this legal text. Focus on obligations, risks, key dates, parties, and termination clauses."}
-Extract key clauses with fields 'title', 'detail', and 'riskLevel'.
-Return JSON only with 'summary' and 'keyClauses'.
-Text:
-${text}`,
-          },
-        ],
-      }),
-    });
-
-    const data = await apiResponse.json();
-    if (!data || !data.choices) {
-      return res.status(500).json({ error: "Invalid response from Perplexity API" });
-    }
-
-    const reply = data.choices?.[0]?.message?.content || "No reply received";
-    res.json({ reply, raw: data });
-  } catch (error) {
-    console.error("❌ Error processing text:", error);
-    res.status(500).json({ error: error.message || "Something went wrong with Perplexity API" });
-  }
-});
-
-// ======================= OTHER ROUTES =======================
-app.use("/api/chat", chatRoutes);          
+// ======================= OTHER ROUTES =======================          
 app.use("/api/simplify", simplifierRoutes);
 app.use("/api/translate", translatorRoutes);
 app.use("/api/lawyer", lawyerRoutes);

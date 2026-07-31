@@ -1,53 +1,156 @@
 import React from "react";
-import { Scale, Wrench, FileText, UserCheck, FileDown, Users, Lock, ShieldCheck, ArrowRight } from "lucide-react";
+import heroIllustration from "../assets/illustrations/hero.png";
+import FeatureCard from "../components/FeatureCard";
+import SecuritySection from "./SecuritySection";
+import TrustRow from "./TrustRow";
+import Button from "./ui/Button";
+import CtaBanner from "./CtaBanner";
+import {
+  Scale,
+  FileText,
+  UserCheck,
+  FileDown,
+  Users,
+  MessageCircle
+} from "lucide-react";
+
 import Navbar from "./Navbar";
 import { Link } from 'react-router-dom';
 
 const featureCards = [
-  { title: "Document Simplifier", icon: FileText, desc: "Transform complex legal documents into plain English.", to: "/simplifier" },
-  { title: "Know Your Rights", icon: UserCheck, desc: "Get instant answers to your legal questions.", to: "/rights" },
-  { title: "Legal Templates", icon: FileDown, desc: "Generate custom legal documents instantly.", to: "/templates" },
-  { title: "Find Lawyers", icon: Users, desc: "Connect with qualified legal professionals.", to: "/lawyers" },
-];
+  {
+    title: "Document Simplifier",
+    icon: FileText,
+    desc: "Transform complex legal documents into plain English.",
+    to: "/simplifier",
+    accent: {
+      bg: "bg-violet-100",
+      icon: "text-violet-600",
+      border: "border-violet-200",
+      hover: "group-hover:bg-violet-600",
+      hoverText: "group-hover:text-white",
+      arrow: "text-violet-600",
+    },
+  },
 
-const securityFeatures = [
-  { title: "End-to-end Encryption", icon: Lock },
-  { title: "Professional Standards", icon: ShieldCheck },
-  { title: "Licensed Attorney Network", icon: Users },
+  {
+    title: "Know Your Rights",
+    icon: UserCheck,
+    desc: "Get instant answers to your legal questions.",
+    to: "/rights",
+    accent: {
+      bg: "bg-emerald-100",
+      icon: "text-emerald-600",
+      border: "border-emerald-200",
+      hover: "group-hover:bg-emerald-600",
+      hoverText: "group-hover:text-white",
+      arrow: "text-emerald-600",
+    },
+  },
+
+  {
+    title: "Legal Templates",
+    icon: FileDown,
+    desc: "Generate custom legal documents instantly.",
+    to: "/templates",
+    accent: {
+      bg: "bg-amber-100",
+      icon: "text-amber-600",
+      border: "border-amber-200",
+      hover: "group-hover:bg-amber-600",
+      hoverText: "group-hover:text-white",
+      arrow: "text-amber-600",
+    },
+  },
+
+  {
+    title: "Find Lawyers",
+    icon: Users,
+    desc: "Connect with qualified legal professionals.",
+    to: "/lawyers",
+    accent: {
+      bg: "bg-sky-100",
+      icon: "text-sky-600",
+      border: "border-sky-200",
+      hover: "group-hover:bg-sky-600",
+      hoverText: "group-hover:text-white",
+      arrow: "text-sky-600",
+    },
+  },
 ];
 
 // --- Hero Section ---
 const Hero = () => (
-  <section id="home" className="relative pt-32 pb-32 bg-gray-50 text-center">
-    <div className="absolute inset-0 opacity-10 flex justify-center items-center">
-      <Scale className="w-1/2 h-full text-indigo-300" />
+  <section
+  id="home"
+  className="relative overflow-hidden bg-gradient-to-b from-white via-indigo-50/30 to-white pt-24 pb-12 lg:pt-20"
+>
+    <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      <div className="grid items-center gap-12 py-8 lg:grid-cols-2">
+        {/* LEFT */}
+        <div className="mx-auto max-w-xl text-center lg:mx-0 lg:text-left">
+
+          <div className="mb-6 flex justify-center lg:justify-start">
+    <div className="inline-flex items-center gap-2 rounded-full border border-indigo-200 bg-indigo-50 px-4 py-2 text-sm font-medium text-indigo-700">
+        <Scale size={16} />
+        AI Powered Legal Assistant
     </div>
+</div>
 
-    <div className="relative max-w-4xl mx-auto px-6">
-      <div className="flex justify-center space-x-4 mb-6">
-        <Scale className="w-10 h-10 text-yellow-600" />
-        <Wrench className="w-10 h-10 text-gray-600" />
-      </div>
+          <h1 className="mx-auto max-w-xl text-4xl font-black leading-tight tracking-tight text-slate-900 sm:text-5xl lg:mx-0 lg:text-left lg:text-7xl">
+            Legal Help
+            <span className="mt-2 block bg-gradient-to-r from-indigo-600 via-violet-600 to-blue-600 bg-clip-text text-transparent">
+              Made Simple.
+            </span>
+          </h1>
 
-      <h1 className="text-5xl font-extrabold text-gray-900 mb-4">
-        Your Rights, Simplified.
-      </h1>
-      <p className="text-xl text-gray-600 mb-10">
-        Navigate the legal world with confidence. Our AI-powered assistant makes complex legal matters accessible to everyone.
-      </p>
+          <p className="mx-auto mt-6 max-w-[470px] text-base leading-8 text-slate-600 sm:text-lg lg:mx-0 lg:mt-8 lg:text-left">
+            Simplify legal documents, understand your rights,
+            generate legal templates, and connect with trusted
+            lawyers—all in one AI-powered platform.
+          </p>
 
-      <div className="flex flex-col sm:flex-row justify-center gap-4">
-        <Link to="/rights">
-          <button className="px-8 py-3 rounded-full text-white bg-indigo-700 hover:bg-indigo-800">
-            Start Legal Chat 
-          </button>
-        </Link>
+          <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:justify-center lg:justify-start">
+           <Link to="/rights">
+  <Button
+    variant="primary"
+    className="px-7 py-3.5 rounded-full shadow-md text-base"
+  >
+    <MessageCircle size={17} className="mr-2" />
+    Start Legal Chat
+  </Button>
+</Link>
 
-        <Link to="/simplifier">
-          <button className="px-8 py-3 rounded-full border border-indigo-700 text-indigo-700 hover:bg-indigo-50">
-            Simplify Document
-          </button>
-        </Link>
+<Link to="/simplifier">
+  <Button
+    variant="outline"
+    className="px-7 py-3.5 rounded-full text-base"
+  >
+    <FileText size={17} className="mr-2" />
+    Simplify Document
+  </Button>
+</Link>
+          </div>
+          
+          <div className="mt-10 flex justify-center lg:justify-start">
+  <TrustRow />
+</div>
+
+        </div>
+
+        {/* RIGHT */}
+        <div className="relative order-1 flex items-center justify-center lg:order-2">
+  {/* Background Glow */}
+  <div className="absolute h-[380px] w-[380px] rounded-full bg-violet-300/20 blur-[100px] sm:h-[450px] sm:w-[450px] lg:h-[600px] lg:w-[600px]" />
+
+  <img
+    src={heroIllustration}
+    alt="LegalEase Hero"
+    className="relative z-10 w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-3xl"
+    draggable={false}
+  />
+</div>
+
       </div>
     </div>
   </section>
@@ -55,65 +158,39 @@ const Hero = () => (
 
 // --- Features Section ---
 const FeaturesSection = () => (
-  <section className="py-20 bg-white">
-    <div className="max-w-7xl mx-auto px-6 text-center">
-      <h2 className="text-4xl font-extrabold mb-2">Powerful Legal Tools</h2>
-      <p className="text-xl text-gray-600 mb-12">
+  <section className="relative overflow-hidden bg-gradient-to-b from-white via-slate-50 to-white py-16 lg:py-20">
+     {/* Background Glow */}
+    <div className="absolute left-1/2 top-0 h-72 w-[700px] -translate-x-1/2 rounded-full bg-violet-200/20 blur-[120px]" />
+    <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8 text-center">
+      <h2 className="text-3xl font-black tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
+        Powerful Legal Tools
+      </h2>
+
+      <p className="mx-auto mt-4 mb-12 max-w-2xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8 lg:mb-16">
         Everything you need to understand and navigate legal matters with confidence
       </p>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="grid gap-6 sm:gap-7 md:grid-cols-2 xl:grid-cols-4">
         {featureCards.map((card) => (
-          <Link
-            key={card.title}
-            to={card.to}
-            className={
-              "block p-6 rounded-xl shadow-lg border transition-transform transform-gpu duration-300 ease-out " +
-              "hover:-translate-y-1 hover:shadow-2xl hover:shadow-indigo-300/40 hover:bg-indigo-50"
-            }
-          >
-            <div className="p-3 mb-4 inline-flex rounded-full bg-indigo-50 text-indigo-600">
-              <card.icon className="w-6 h-6" />
-            </div>
-            <h3 className="text-xl font-semibold">{card.title}</h3>
-            <p className="text-gray-600">{card.desc}</p>
-            <div className="mt-4 inline-flex items-center text-indigo-600 hover:text-indigo-800">
-              Learn more <ArrowRight className="w-4 h-4 ml-1" />
-            </div>
-          </Link>
-        ))}
+  <FeatureCard
+    key={card.title}
+    card={card}
+  />
+))}
       </div>
-    </div>
-  </section>
-);
-
-// --- Security Section ---
-const SecuritySection = () => (
-  <section className="py-20 bg-gray-50 border-t text-center">
-    <Scale className="w-12 h-12 text-yellow-600 mx-auto mb-4" />
-    <h2 className="text-3xl font-bold mb-4">Trusted & Secure</h2>
-    <p className="text-lg text-gray-600 mb-10 max-w-3xl mx-auto">
-      Your legal information is protected with enterprise-grade security. Our AI provides guidance, but always consult with qualified attorneys for legal advice.
-    </p>
-    <div className="flex flex-col sm:flex-row justify-center gap-6">
-      {securityFeatures.map((f) => (
-        <div key={f.title} className="flex items-center gap-2 text-gray-700">
-          <f.icon className="w-5 h-5 text-indigo-600" />
-          <span>{f.title}</span>
-        </div>
-      ))}
     </div>
   </section>
 );
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-white font-sans">
-      <Navbar />
-      <main>
+    <div className="relative min-h-screen overflow-hidden bg-white font-sans">
+  <Navbar />
+  <main>
         <Hero />
         <FeaturesSection />
         <SecuritySection />
+        <CtaBanner />
       </main>
     </div>
   );

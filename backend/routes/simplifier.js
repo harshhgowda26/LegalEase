@@ -1,4 +1,6 @@
 import express from "express";
+import client from "../ai/nvidia.js";
+
 const router = express.Router();
 
 router.post("/", async (req, res) => {
@@ -27,38 +29,54 @@ router.post("/", async (req, res) => {
       required: ["summary", "keyClauses"],
     };
 
-    const prompt = `
-Summarize this legal text in plain English and extract important clauses.
-Text:
+const prompt = `
+You are a legal document analysis assistant.
+
+Analyze the following legal document and return ONLY a valid JSON object.
+
+The JSON must have exactly this structure:
+
+{
+  "summary": "A simple summary in plain English.",
+  "keyClauses": [
+    {
+      "title": "Clause Name",
+      "detail": "Explanation of the clause.",
+      "status": "Safe | Warning | Important",
+      "alert": true
+    }
+  ]
+}
+
+Rules:
+- Return ONLY JSON.
+- Do NOT use markdown.
+- Do NOT write \`\`\`json.
+- Do NOT add explanations.
+- Include at least 3 key clauses whenever possible.
+- The "alert" field must be either true or false.
+
+Legal Document:
 ${text}
 `;
 
-    const response = await fetch("https://api.perplexity.ai/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.PERPLEXITY_API_KEY}`,
-      },
-      body: JSON.stringify({
-        model: "sonar-pro",
-        messages: [
-          {
-            role: "system",
-            content:
-              "You are a JSON-only assistant. Return only valid JSON that matches the provided schema.",
-          },
-          { role: "user", content: prompt },
-        ],
-        response_format: {
-          type: "json_schema",
-          json_schema: { name: "contract_summary_schema", schema },
-        },
-        temperature: 0,
-      }),
-    });
+const response = await client.chat.completions.create({
+  model: "deepseek-ai/deepseek-v4-pro",
+  messages: [
+    {
+      role: "system",
+      content:
+        "You are a JSON-only assistant. Return only valid JSON that matches the provided schema.",
+    },
+    {
+      role: "user",
+      content: prompt,
+    },
+  ],
+  temperature: 0,
+});
 
-    const data = await response.json();
-    let reply = data?.choices?.[0]?.message?.content;
+let reply = response.choices?.[0]?.message?.content;
 
     if (!reply) return res.status(502).json({ error: "No valid content from API." });
     reply = reply.replace(/```json/gi, "").replace(/```/g, "").trim();

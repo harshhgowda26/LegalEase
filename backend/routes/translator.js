@@ -1,4 +1,6 @@
 import express from "express";
+import client from "../ai/nvidia.js";
+
 const router = express.Router();
 
 router.post("/", async (req, res) => {
@@ -6,29 +8,31 @@ router.post("/", async (req, res) => {
     const { text } = req.body;
     if (!text) return res.status(400).json({ error: "Text is required" });
 
-    const apiResponse = await fetch("https://api.perplexity.ai/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.PERPLEXITY_API_KEY}`,
-      },
-      body: JSON.stringify({
-        model: "sonar-pro",
-        messages: [
-          {
-            role: "system",
-            content: "Translate this text into multiple Indian languages if required.",
-          },
-          { role: "user", content: text },
-        ],
-        temperature: 0,
-        max_tokens: 8000,
-      }),
-    });
+const response = await client.chat.completions.create({
+  model: "deepseek-ai/deepseek-v4-pro",
+  messages: [
+    {
+      role: "system",
+      content: `
+You are a professional translator.
 
-    const data = await apiResponse.json();
-    let reply = data?.choices?.[0]?.message?.content?.trim();
+Return ONLY the translated text.
 
+Do not add explanations.
+Do not add notes.
+Do not use markdown.
+      `,
+    },
+    {
+      role: "user",
+      content: text,
+    },
+  ],
+  temperature: 0,
+});
+
+let reply = response.choices?.[0]?.message?.content?.trim();
+   
     reply = reply.replace(/```json/gi, "").replace(/```/g, "").trim();
 
     try {
