@@ -1,8 +1,13 @@
-# LegalEase ⚖️
+# LegalEase 🚀
 
-**Live Demo:** Coming Soon 🚀
+### 🌐 Live Demo
+**Frontend:** https://legal-ease-9b2rt0vjk-harshhgowda26s-projects.vercel.app
 
-LegalEase is an AI-powered legal assistant that helps users simplify legal documents, understand their legal rights, generate legal templates, and connect with trusted legal professionals.
+**Backend API:** https://legalease-backend-7my8.onrender.com
+
+Your AI-powered legal assistant for simplifying legal documents, understanding legal rights, generating legal templates, and connecting users with trusted lawyers.
+
+Empowering individuals with accessible legal knowledge.
 
 ---
 
@@ -53,7 +58,7 @@ The platform enables users to:
 
 ## 🎬 Demo
 
-**Live Demo:** Coming Soon
+🔗 **Live Demo:** https://legal-ease-9b2rt0vjk-harshhgowda26s-projects.vercel.app
 
 ### Landing Page
 
