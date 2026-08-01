@@ -1,6 +1,6 @@
 import React from "react";
 import heroIllustration from "../assets/illustrations/hero.png";
-import FeatureCard from "../components/FeatureCard";
+import FeatureCard from "./FeatureCard";
 import SecuritySection from "./SecuritySection";
 import TrustRow from "./TrustRow";
 import Button from "./ui/Button";
@@ -14,7 +14,6 @@ import {
   MessageCircle
 } from "lucide-react";
 
-import Navbar from "./Navbar";
 import { Link } from 'react-router-dom';
 
 const featureCards = [
@@ -185,7 +184,6 @@ const FeaturesSection = () => (
 export default function Home() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-white font-sans">
-  <Navbar />
   <main>
         <Hero />
         <FeaturesSection />
